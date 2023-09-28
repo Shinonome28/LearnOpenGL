@@ -18,3 +18,6 @@ target_link_libraries(CoordinateSystem PRIVATE glad::glad glfw glm::glm $<TARGET
 
 add_executable(UniformExample UniformExample.cpp)
 target_link_libraries(UniformExample PRIVATE glad::glad glfw glm::glm $<TARGET_OBJECTS:stb_implementation>)
+
+add_executable(BasicColor BasicColor.cpp)
+target_link_libraries(BasicColor PRIVATE glad::glad glfw glm::glm $<TARGET_OBJECTS:stb_implementation>)
