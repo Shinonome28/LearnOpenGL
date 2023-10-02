@@ -14,7 +14,7 @@ find_package(glm CONFIG REQUIRED)
 add_subdirectory(src)
 
 set(shaderSource "${CMAKE_SOURCE_DIR}/Shaders")
-set(shaderDestination "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE}/Shaders")
+set(shaderDestination "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE}/shaders")
 add_custom_target(
     copyShader
     ALL
