@@ -21,3 +21,6 @@ target_link_libraries(UniformExample PRIVATE glad::glad glfw glm::glm $<TARGET_O
 
 add_executable(BasicColor BasicColor.cpp)
 target_link_libraries(BasicColor PRIVATE glad::glad glfw glm::glm $<TARGET_OBJECTS:stb_implementation>)
+
+add_executable(BlingPhone BlingPhone.cpp)
+target_link_libraries(BlingPhone PRIVATE glad::glad glfw glm::glm $<TARGET_OBJECTS:stb_implementation>)

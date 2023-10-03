@@ -53,7 +53,9 @@ class Shader {
   void setInt(const std::string &name, int value) const;
   void setFloat(const std::string &name, float value) const;
   void setMat4(const std::string &name, const glm::mat4 &mat);
+  void setMat3(const std::string &name, const glm::mat3 &mat);
   void setVec3(const std::string &name, float v1, float v2, float v3);
+  void setVec3(const std::string &name, const glm::vec3 &vec);
 
   GLuint getID() const { return ID; }
 };
@@ -139,13 +141,22 @@ void Shader::setFloat(const std::string &name, float value) const {
 }
 
 void Shader::setMat4(const std::string &name, const glm::mat4 &mat) {
-  int modelLoc = glGetUniformLocation(getID(), name.c_str());
-  glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(mat));
+  int location = glGetUniformLocation(getID(), name.c_str());
+  glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+inline void Shader::setMat3(const std::string &name, const glm::mat3 &mat) {
+  int location = glGetUniformLocation(getID(), name.c_str());
+  glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 inline void Shader::setVec3(const std::string &name, float v1, float v2,
                             float v3) {
   glUniform3f(glGetUniformLocation(ID, name.c_str()), v1, v2, v3);
+}
+
+inline void Shader::setVec3(const std::string &name, const glm::vec3 &vec) {
+  glUniform3f(glGetUniformLocation(ID, name.c_str()), vec.x, vec.y, vec.z);
 }
 
 }  // namespace LearnOpenGLUtils

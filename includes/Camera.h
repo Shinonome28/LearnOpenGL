@@ -12,13 +12,13 @@
 
 namespace LearnOpenGLUtils {
 
-enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT };
+enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN };
 
 // Default camera values
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
+const float SENSITIVITY = 0.02f;
 const float ZOOM = 45.0f;
 
 // An abstract camera class that processes input and calculates the
@@ -81,6 +81,8 @@ class Camera {
     if (direction == BACKWARD) Position -= Front * velocity;
     if (direction == LEFT) Position -= Right * velocity;
     if (direction == RIGHT) Position += Right * velocity;
+    if (direction == UP) Position += WorldUp * velocity;
+    if (direction == DOWN) Position -= WorldUp * velocity;
   }
 
   // processes input received from a mouse input system. Expects the offset
