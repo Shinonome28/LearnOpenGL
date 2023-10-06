@@ -148,18 +148,12 @@ int main() {
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window)) {
-    // per-frame time logic
-    // --------------------
     float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    // input
-    // -----
     processInput(window);
 
-    // render
-    // ------
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -196,6 +190,7 @@ int main() {
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.2f));  // a smaller cube
+
     lightSourceShader.setMat4("model", model);
 
     glBindVertexArray(lightSourceVAO);
