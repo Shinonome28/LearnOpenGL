@@ -17,3 +17,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=C:/src/vcpkg/scripts/buildsystems/vcpkg.cmake ..
 Or you can set these cache variables in `CMakePresets.json`.
 
 Only tested under MSVC.
+
+## Where to find exercise answer in this repo
+
+I done some of the exercises. You can checkout corressponding branch to get code.
+The naming scheme is as following: e_#_#_#, # stands for 3 three-bit code for the exercise.
