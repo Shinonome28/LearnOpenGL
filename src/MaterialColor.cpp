@@ -20,6 +20,10 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
+#define MATERIAL_RUBY_ 1
+#define MATERIAL_JADE_ 2
+#define MATERIAL_ MATERIAL_RUBY_
+
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 960;
@@ -159,27 +163,33 @@ int main() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::vec3 lightColor;
-    lightColor.x = (float)sin(glfwGetTime() * 2.0f);
-    lightColor.y = (float)sin(glfwGetTime() * 0.7f);
-    lightColor.z = (float)sin(glfwGetTime() * 1.3f);
-
-    glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);    // 降低影响
-    glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);  // 很低的影响
-
     // be sure to activate shader when setting uniforms/drawing objects
     litObjectShader.use();
     litObjectShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     litObjectShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     litObjectShader.setVec3("lightPos", lightPos);
     litObjectShader.setVec3("viewPos", camera.Position);
+
+#if MATERIAL_ == MATERIAL_JADE_
+    litObjectShader.setVec3("material.ambient", 0.0215f, 0.1745f, 0.0215f);
+    litObjectShader.setVec3("material.diffuse", 0.07568f, 0.61424f, 0.07568f);
+    litObjectShader.setVec3("material.specular", 0.633f, 0.727811f, 0.633f);
+    litObjectShader.setFloat("material.shininess", 0.6f);
+#elif MATERIAL_ == MATERIAL_RUBY_
+    litObjectShader.setVec3("material.ambient", 0.1745f, 0.01175f, 0.01175f);
+    litObjectShader.setVec3("material.diffuse", 0.61424f, 0.04136f, 0.04136f);
+    litObjectShader.setVec3("material.specular", 0.727811f, 0.626959f,
+                            0.626959f);
+    litObjectShader.setFloat("material.shininess", 0.6f);
+#else
     litObjectShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
     litObjectShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
     litObjectShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
     litObjectShader.setFloat("material.shininess", 32.0f);
-    litObjectShader.setVec3("light.ambient", ambientColor);
-    litObjectShader.setVec3("light.diffuse",
-                            diffuseColor);  // 将光照调暗了一些以搭配场景
+#endif
+
+    litObjectShader.setVec3("light.ambient", 1.0f, 1.0f, 1.0f);
+    litObjectShader.setVec3("light.diffuse", 1.0f, 1.0f, 1.0f);
     litObjectShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
     // view/projection transformations
@@ -205,7 +215,7 @@ int main() {
     lightSourceShader.use();
     lightSourceShader.setMat4("projection", projection);
     lightSourceShader.setMat4("view", view);
-    lightSourceShader.setVec3("lightColor", lightColor);
+    lightSourceShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.2f));  // a smaller cube
